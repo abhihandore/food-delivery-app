@@ -1,21 +1,17 @@
 import React from 'react';
 import classes from './Input.module.css';
 
-const Input = (props) => {
+const Input = React.forwardRef( (props, ref) => {
     return (
         <div className={classes.field} >
-            <label className={classes.label} htmlFor={props.id}>{props.label}</label>
+            <label className={classes.label} htmlFor={props.input.id}>{props.label}</label>
             <div className='control'>
                 <input
-                    type={props.type} 
-                    id={props.id} 
-                    name={props.name} 
-                    className={`${props.className} input`} 
-                    value={props.value} 
-                    placeholder={props.placeholder} 
+                    ref={ref}
+                    {...props.input}
                 />
             </div>
         </div>
     )
-}
+})
 export default Input;

@@ -1,39 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Meals from './components/Meals/Meals';
-const DUMMY_MEALS = [
-  {
-    id: 'm1',
-    name: 'Sushi',
-    description: 'Finest fish and veggies',
-    price: 22.99,
-  },
-  {
-    id: 'm2',
-    name: 'Schnitzel',
-    description: 'A german specialty!',
-    price: 16.5,
-  },
-  {
-    id: 'm3',
-    name: 'Barbecue Burger',
-    description: 'American, raw, meaty',
-    price: 12.99,
-  },
-  {
-    id: 'm4',
-    name: 'Green Bowl',
-    description: 'Healthy...and green...',
-    price: 18.99,
-  },
-];
+import CartContextProvider from './Store/cart_context';
+import Cart from './components/Cart/Cart';
+import Modal from './components/UI/Modal/Modal';
 function App() {
+
+  const [showCart, setShowCart] = useState(false);
+  const showCartHandler = () => {
+    setShowCart(true);
+  }
+  const hideCartHandler = () => {
+    setShowCart(false);
+  }
+
   return (
-    <React.Fragment>
-      <Header />
-      <Meals meals={DUMMY_MEALS} />
-    </React.Fragment>
+    <CartContextProvider>
+      {showCart && <Modal onBackdropClick={hideCartHandler} ><Cart onClose={hideCartHandler} /></Modal>}
+      <Header onCartShow={showCartHandler} />
+      <Meals />
+    </CartContextProvider>
   );
 }
 
